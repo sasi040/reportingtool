@@ -1,16 +1,26 @@
-package com.test.reporting.reportingtool.pojos;
+package com.test.reporting.reportingtool.jparepos;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
-@Document("executions")
-public class Execution {
+@Entity
+@Table(name = "EXECUTION")
+public class Execution implements Serializable {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
     private String name;
 
@@ -20,10 +30,8 @@ public class Execution {
 
     private String operatingSystem;
 
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String systemIP;
 
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String systemName;
 
     private String executedBy;
@@ -34,13 +42,29 @@ public class Execution {
 
     private Status status;
 
+    public Application getApplication() {
+        return application;
+    }
+
+    public void setApplication(final Application application) {
+        this.application = application;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Application application;
+
+    @OneToMany(
+        mappedBy = "execution",
+        cascade = CascadeType.ALL,
+        orphanRemoval = true
+    )
     private List<TestSuite> suites;
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(final String id) {
+    public void setId(final Long id) {
         this.id = id;
     }
 

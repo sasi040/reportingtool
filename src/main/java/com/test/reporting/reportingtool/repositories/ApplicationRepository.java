@@ -5,16 +5,13 @@ import com.test.reporting.reportingtool.pojos.Application;
 import com.test.reporting.reportingtool.pojos.Execution;
 import java.util.List;
 import java.util.Optional;
-import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.WriteResultChecking;
 import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Field;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
-import org.springframework.data.mongodb.core.schema.MongoJsonSchema;
 import org.springframework.stereotype.Repository;
 
 import static org.springframework.data.mongodb.core.query.Criteria.where;
@@ -44,15 +41,13 @@ public class ApplicationRepository {
         return result.getModifiedCount();
     }
 
-    public List<Execution> findExecution(final String executionName) {
+    public Optional<Application> findExecution(final String executionName) {
 
-        MongoJsonSchema schema  = MongoJsonSchema.of(new Document().append("applications.executions.name",executionName));
+        final Query query = new Query(Criteria.where("executions.name").is(executionName));
 
-        final Query query = new Query(Criteria.matchingDocumentStructure(schema));
+        query.fields().elemMatch("executions",Criteria.where("name").is(executionName));
 
-        query.fields().include("executions");
-
-        return this.mongoTemplate.find(query,Execution.class,"applications");
+        return Optional.ofNullable(this.mongoTemplate.findOne(query, Application.class));
 
     }
 }

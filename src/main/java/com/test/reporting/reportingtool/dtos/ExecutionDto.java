@@ -1,16 +1,12 @@
-package com.test.reporting.reportingtool.pojos;
+package com.test.reporting.reportingtool.dtos;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.test.reporting.reportingtool.jparepos.Status;
+import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.List;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document("executions")
-public class Execution {
+public class ExecutionDto implements Serializable {
 
-    @Id
-    private String id;
+    private Long id;
 
     private String name;
 
@@ -20,10 +16,8 @@ public class Execution {
 
     private String operatingSystem;
 
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String systemIP;
 
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String systemName;
 
     private String executedBy;
@@ -34,13 +28,21 @@ public class Execution {
 
     private Status status;
 
-    private List<TestSuite> suites;
+    private Long applicationId;
 
-    public String getId() {
+    public Long getApplicationId() {
+        return applicationId;
+    }
+
+    public void setApplicationId(final Long applicationId) {
+        this.applicationId = applicationId;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(final String id) {
+    public void setId(final Long id) {
         this.id = id;
     }
 
@@ -124,11 +126,4 @@ public class Execution {
         this.status = status;
     }
 
-    public List<TestSuite> getSuites() {
-        return suites;
-    }
-
-    public void setSuites(final List<TestSuite> suites) {
-        this.suites = suites;
-    }
 }
