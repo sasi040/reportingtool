@@ -5,6 +5,7 @@ import com.test.reporting.reportingtool.dtos.TestSuiteDto;
 import com.test.reporting.reportingtool.jparepos.TestSuite;
 import com.test.reporting.reportingtool.repositories.ExecutionJpaRepository;
 import com.test.reporting.reportingtool.repositories.TestSuiteJpaRepository;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +43,19 @@ public class TestSuiteService {
             .map(this.repository::save)
             .map(TestSuite::getId)
             .orElse(null);
+    }
+
+    public TestSuiteDto getSuite(final Long id) {
+        TestSuiteDto dto = this.repository.findById(id)
+            .map(this.converter::convert)
+            .orElse(null);
+        Optional.ofNullable(dto)
+            .map(TestSuiteDto::getCases)
+            .ifPresent(suites -> {
+                suites.forEach(e -> e.setTestSuiteId(id));
+            });
+
+        return dto;
     }
 
 }

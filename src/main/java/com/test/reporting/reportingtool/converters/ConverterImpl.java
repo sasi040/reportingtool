@@ -80,15 +80,18 @@ public class ConverterImpl implements Converter {
     }
 
     public void enrich(final ExecutionDto dto, final Execution entity) {
-        this.mapper.map(dto, entity);
+        entity.setStatus(dto.getStatus());
+        entity.setEndTime(dto.getEndTime());
     }
 
     public void enrich(final TestSuiteDto dto, final TestSuite entity) {
-        this.mapper.map(dto, entity);
+        entity.setStatus(dto.getStatus());
+        entity.setEndTime(dto.getEndTime());
     }
 
     public void enrich(final TestCaseDto dto ,final TestCase entity) {
-        this.mapper.map(dto, entity);
+        entity.setStatus(dto.getStatus());
+        entity.setEndTime(dto.getEndTime());
     }
 
 }

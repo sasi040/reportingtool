@@ -45,8 +45,17 @@ public class ExecutionService {
             .orElse(null);
     }
 
-    public Optional<Execution> findById(final java.lang.Long id) {
-        return this.repository.findById(id);
+    public ExecutionDto getExecution(final Long id) {
+        ExecutionDto dto = this.repository.findById(id)
+            .map(this.converter::convert)
+            .orElse(null);
+        Optional.ofNullable(dto)
+            .map(ExecutionDto::getSuites)
+            .ifPresent(suites -> {
+                suites.forEach(e -> e.setExeuctionId(id));
+            });
+
+        return dto;
     }
 
 }

@@ -23,7 +23,7 @@ public class TestStepService {
         this.repository = repository;
     }
 
-    public Long createTestCase(final Long testCaseId, final TestStepDto testStepDto) {
+    public Long createTestStep(final Long testCaseId, final TestStepDto testStepDto) {
         TestStep entity = converter.convert(testStepDto);
         this.testCaseRepository.findById(testCaseId)
             .ifPresent(s -> {
@@ -31,6 +31,24 @@ public class TestStepService {
                 this.repository.save(entity);
             });
         return entity.getId();
+    }
+
+    /*public Long updateTestCase(final TestCaseDto testCaseDto) {
+        return this.repository.findById(testCaseDto.getId())
+            .map(entity -> {
+                converter.enrich(testCaseDto, entity);
+                return entity;
+            })
+            .map(this.repository::save)
+            .map(TestCase::getId)
+            .orElse(null);
+    }*/
+
+    public TestStepDto getStep(final Long id) {
+        TestStepDto dto = this.repository.findById(id)
+            .map(this.converter::convert)
+            .orElse(null);
+        return dto;
     }
 
 }

@@ -1,9 +1,8 @@
 package com.test.reporting.reportingtool.ctrl;
 
+import com.test.reporting.reportingtool.dtos.TestCaseDto;
+import com.test.reporting.reportingtool.dtos.TestSuiteDto;
 import com.test.reporting.reportingtool.exceptions.EntityNotFoundException;
-import com.test.reporting.reportingtool.jparepos.Execution;
-import com.test.reporting.reportingtool.jparepos.TestCase;
-import com.test.reporting.reportingtool.jparepos.TestSuite;
 import com.test.reporting.reportingtool.services.TestCaseService;
 import com.test.reporting.reportingtool.services.TestSuiteService;
 import java.util.Optional;
@@ -29,25 +28,22 @@ public class TestSuiteController {
     @Autowired
     private TestSuiteService testSuiteService;
 
-    /*@RequestMapping(method = RequestMethod.PUT)
-    public Execution updateTestSuite(@RequestBody final TestSuite suite) {
-        return Optional.ofNullable(this.testSuiteService.updateSuite(suite))
-            .map(TestSuite::getId)
-            .orElseThrow(() -> new EntityNotFoundException(suite.getId()));
+    @RequestMapping(method = RequestMethod.PUT)
+    public Long updateTestSuite(@RequestBody final TestSuiteDto dto) {
+        return Optional.ofNullable(this.testSuiteService.updateTestSuite(dto))
+            .orElseThrow(() -> new EntityNotFoundException(dto.getId()));
     }
 
-    @RequestMapping(method = RequestMethod.POST,path = "{id}/testCase")
-    public Execution createTestCase(@PathVariable("id") final Execution id, @RequestBody final TestCase testCase) {
-        final TestSuite suite = this.testSuiteService.findById(id).orElseThrow(() -> new EntityNotFoundException(id));
-        testCase.setTestSuite(suite);
-        return this.testCaseService.createTestCase(testCase);
+    @RequestMapping(method = RequestMethod.POST, path = "{id}/testCase")
+    public Long createTestCase(@PathVariable("id") final Long id, @RequestBody final TestCaseDto testCase) {
+        return this.testCaseService.createTestCase(id, testCase);
     }
 
-    @RequestMapping(method = RequestMethod.GET,path = "{id")
-    public EntityModel<TestSuite> findTestSuiteById(@PathVariable("id") final Execution id) {
-        return this.testSuiteService.findById(id)
-            .map(t -> new EntityModel<>(t,linkTo(methodOn(TestCaseController.class).findTestCaseById(t.getId())).withSelfRel()))
+    @RequestMapping(method = RequestMethod.GET, path = "{id")
+    public EntityModel<TestSuiteDto> findTestSuiteById(@PathVariable("id") final Long id) {
+        return Optional.ofNullable(this.testSuiteService.getSuite(id))
+            .map(t -> new EntityModel<>(t, linkTo(methodOn(TestSuiteController.class)).withSelfRel()))
             .orElseThrow(() -> new EntityNotFoundException(id));
-    }*/
+    }
 
 }

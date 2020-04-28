@@ -3,6 +3,7 @@ package com.test.reporting.reportingtool.dtos;
 import com.test.reporting.reportingtool.jparepos.Execution;
 import com.test.reporting.reportingtool.jparepos.Status;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class TestSuiteDto {
 
@@ -24,13 +25,23 @@ public class TestSuiteDto {
 
     private Status status;
 
-    private Execution exeuctionId;
+    private Long exeuctionId;
 
-    public Execution getExeuctionId() {
+    public List<TestCaseDto> getCases() {
+        return cases;
+    }
+
+    public void setCases(final List<TestCaseDto> cases) {
+        this.cases = cases;
+    }
+
+    private List<TestCaseDto> cases;
+
+    public Long getExeuctionId() {
         return exeuctionId;
     }
 
-    public void setExeuctionId(final Execution exeuctionId) {
+    public void setExeuctionId(final Long exeuctionId) {
         this.exeuctionId = exeuctionId;
     }
 

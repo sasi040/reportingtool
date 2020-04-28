@@ -3,6 +3,7 @@ package com.test.reporting.reportingtool.dtos;
 import com.test.reporting.reportingtool.jparepos.Status;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class ExecutionDto implements Serializable {
 
@@ -29,6 +30,16 @@ public class ExecutionDto implements Serializable {
     private Status status;
 
     private Long applicationId;
+
+    public List<TestSuiteDto> getSuites() {
+        return suites;
+    }
+
+    public void setSuites(final List<TestSuiteDto> suites) {
+        this.suites = suites;
+    }
+
+    private List<TestSuiteDto> suites;
 
     public Long getApplicationId() {
         return applicationId;

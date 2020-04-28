@@ -1,17 +1,21 @@
 package com.test.reporting.reportingtool.ctrl;
 
+import com.test.reporting.reportingtool.dtos.ExecutionDto;
+import com.test.reporting.reportingtool.dtos.TestSuiteDto;
 import com.test.reporting.reportingtool.exceptions.EntityNotFoundException;
-import com.test.reporting.reportingtool.jparepos.Execution;
-import com.test.reporting.reportingtool.jparepos.TestSuite;
 import com.test.reporting.reportingtool.services.ExecutionService;
 import com.test.reporting.reportingtool.services.TestSuiteService;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping(value = "/exec")
@@ -26,17 +30,23 @@ public class ExecController {
 
 
     @RequestMapping(method = RequestMethod.PUT)
-    public java.lang.Long updateExecution(@RequestBody final Execution execution) {
+    public Long updateExecution(@RequestBody final ExecutionDto execution) {
         return Optional.ofNullable(this.executionService.updateExecution(execution))
-            .map(Execution::getId)
             .orElseThrow(() -> new EntityNotFoundException(execution.getId()));
     }
 
-   /* @RequestMapping(method = RequestMethod.POST,path = "{id}/suite")
-    public java.lang.Long createTestSuite(@PathVariable("id") final java.lang.Long id, @RequestBody final TestSuite suite) {
-        final Execution execution = this.executionService.findById(id).orElseThrow(() -> new EntityNotFoundException(id));
-        suite.setExecution(execution);
-        return this.testSuiteService.createSuite(suite);
-    }*/
+    @RequestMapping(method=RequestMethod.GET,path = "{id}")
+    public EntityModel<ExecutionDto> findByExecutionId(@PathVariable("id") final Long id) {
+        return Optional.ofNullable(this.executionService.getExecution(id))
+            .map(exec -> new EntityModel<>(exec,
+                linkTo(methodOn(ExecController.class)).withSelfRel(),
+                linkTo(methodOn(AppController.class).applications()).withRel("apps")))
+            .orElseThrow(() -> new EntityNotFoundException(id));
+    }
+
+    @RequestMapping(method = RequestMethod.POST,path = "{id}/suite")
+    public java.lang.Long createTestSuite(@PathVariable("id") final Long executionId, @RequestBody final TestSuiteDto dto) {
+        return this.testSuiteService.createTestSuite(executionId,dto);
+    }
 
 }

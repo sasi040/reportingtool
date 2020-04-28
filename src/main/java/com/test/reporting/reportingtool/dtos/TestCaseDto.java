@@ -2,10 +2,11 @@ package com.test.reporting.reportingtool.dtos;
 
 import com.test.reporting.reportingtool.jparepos.Status;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class TestCaseDto {
 
-    private java.lang.Long id;
+    private Long id;
 
     private String name;
 
@@ -24,6 +25,16 @@ public class TestCaseDto {
     private Status status;
 
     private Long testSuiteId;
+
+    public List<TestStepDto> getSteps() {
+        return steps;
+    }
+
+    public void setSteps(final List<TestStepDto> steps) {
+        this.steps = steps;
+    }
+
+    private List<TestStepDto> steps;
 
     public Long getTestSuiteId() {
         return testSuiteId;

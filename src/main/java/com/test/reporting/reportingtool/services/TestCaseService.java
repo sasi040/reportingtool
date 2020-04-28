@@ -46,8 +46,17 @@ public class TestCaseService {
             .orElse(null);
     }
 
-    public Optional<TestCase> findById(final Long id) {
-        return this.repository.findById(id);
+    public TestCaseDto getTestCase(final Long id) {
+        TestCaseDto dto = this.repository.findById(id)
+            .map(this.converter::convert)
+            .orElse(null);
+        Optional.ofNullable(dto)
+            .map(TestCaseDto::getSteps)
+            .ifPresent(steps -> {
+                steps.forEach(e -> e.setTestCaseId(id));
+            });
+
+        return dto;
     }
 
 }
