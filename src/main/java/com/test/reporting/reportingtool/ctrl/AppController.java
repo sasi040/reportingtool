@@ -39,13 +39,13 @@ public class AppController {
     @RequestMapping(method = RequestMethod.GET, path = "{id}")
     public EntityModel<ApplicationDto> findApplicationById(@PathVariable("id") final Long id) {
         return Optional.ofNullable(this.appService.getApplication(id))
-            .map(app -> new EntityModel<>(app, linkTo(methodOn(AppController.class)).withSelfRel(),
+            .map(app -> new EntityModel<>(app, linkTo(methodOn(AppController.class).findApplicationById(id)).withSelfRel(),
                 linkTo(methodOn(AppController.class).applications()).withRel("apps")))
             .orElseThrow(() -> new EntityNotFoundException(id));
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public CollectionModel<EntityModel<ApplicationDto>> applications() {
+    public Collection<EntityModel<ApplicationDto>> applications() {
         Collection<EntityModel<ApplicationDto>> applications = this.appService.findAll()
             .stream()
             .map(app -> new EntityModel<>(app,
@@ -54,7 +54,7 @@ public class AppController {
             ))
             .collect(Collectors.toList());
 
-        return new CollectionModel<>(applications,linkTo(methodOn(AppController.class).applications()).withSelfRel());
+        return applications;
     }
 
     @RequestMapping(method = RequestMethod.POST, path = "{id}/execution")
