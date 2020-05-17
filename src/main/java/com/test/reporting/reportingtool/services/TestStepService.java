@@ -2,24 +2,24 @@ package com.test.reporting.reportingtool.services;
 
 import com.test.reporting.reportingtool.converters.Converter;
 import com.test.reporting.reportingtool.dtos.TestStepDto;
-import com.test.reporting.reportingtool.jparepos.TestStep;
-import com.test.reporting.reportingtool.repositories.TestCaseJpaRepository;
-import com.test.reporting.reportingtool.repositories.TestStepJpaRepository;
+import com.test.reporting.reportingtool.entities.TestStep;
+import com.test.reporting.reportingtool.repositories.TestCaseRepository;
+import com.test.reporting.reportingtool.repositories.TestStepRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class TestStepService {
 
-    private TestStepJpaRepository repository;
+    private TestStepRepository repository;
 
     @Autowired
     private Converter converter;
 
     @Autowired
-    private TestCaseJpaRepository testCaseRepository;
+    private TestCaseRepository testCaseRepository;
 
-    public TestStepService(TestStepJpaRepository repository) {
+    public TestStepService(TestStepRepository repository) {
         this.repository = repository;
     }
 

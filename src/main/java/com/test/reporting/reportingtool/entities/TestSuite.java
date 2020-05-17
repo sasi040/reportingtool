@@ -1,4 +1,4 @@
-package com.test.reporting.reportingtool.jparepos;
+package com.test.reporting.reportingtool.entities;
 
 import java.time.LocalDateTime;
 import java.util.List;

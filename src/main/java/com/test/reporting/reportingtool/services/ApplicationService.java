@@ -2,21 +2,21 @@ package com.test.reporting.reportingtool.services;
 
 import com.test.reporting.reportingtool.converters.Converter;
 import com.test.reporting.reportingtool.dtos.ApplicationDto;
-import com.test.reporting.reportingtool.jparepos.Application;
-import com.test.reporting.reportingtool.repositories.AppJpaRepository;
+import com.test.reporting.reportingtool.entities.Application;
+import com.test.reporting.reportingtool.repositories.ApplicationRepository;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AppService {
+public class ApplicationService {
 
-    private AppJpaRepository repository;
+    private ApplicationRepository repository;
 
     private Converter converter;
 
-    public AppService(final AppJpaRepository repository, final Converter converter) {
+    public ApplicationService(final ApplicationRepository repository, final Converter converter) {
         this.repository = repository;
         this.converter = converter;
     }

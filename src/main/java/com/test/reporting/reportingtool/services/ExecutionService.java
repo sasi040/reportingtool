@@ -2,9 +2,9 @@ package com.test.reporting.reportingtool.services;
 
 import com.test.reporting.reportingtool.converters.ConverterImpl;
 import com.test.reporting.reportingtool.dtos.ExecutionDto;
-import com.test.reporting.reportingtool.jparepos.Execution;
-import com.test.reporting.reportingtool.repositories.AppJpaRepository;
-import com.test.reporting.reportingtool.repositories.ExecutionJpaRepository;
+import com.test.reporting.reportingtool.entities.Execution;
+import com.test.reporting.reportingtool.repositories.ApplicationRepository;
+import com.test.reporting.reportingtool.repositories.ExecutionRepository;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,15 +12,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class ExecutionService {
 
-    private ExecutionJpaRepository repository;
+    private ExecutionRepository repository;
 
     @Autowired
-    private AppJpaRepository appRepository;
+    private ApplicationRepository appRepository;
 
     @Autowired
     private ConverterImpl converter;
 
-    public ExecutionService(ExecutionJpaRepository repository) {
+    public ExecutionService(ExecutionRepository repository) {
         this.repository = repository;
     }
 

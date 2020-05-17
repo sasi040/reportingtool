@@ -1,4 +1,4 @@
-package com.test.reporting.reportingtool.ctrl;
+package com.test.reporting.reportingtool.controllers;
 
 import com.test.reporting.reportingtool.dtos.ExecutionDto;
 import com.test.reporting.reportingtool.dtos.TestSuiteDto;
@@ -19,7 +19,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping(value = "/exec")
-public class ExecController {
+public class ExecutionController {
 
 
     @Autowired
@@ -39,8 +39,8 @@ public class ExecController {
     public EntityModel<ExecutionDto> findByExecutionId(@PathVariable("id") final Long id) {
         return Optional.ofNullable(this.executionService.getExecution(id))
             .map(exec -> new EntityModel<>(exec,
-                linkTo(methodOn(ExecController.class)).withSelfRel(),
-                linkTo(methodOn(AppController.class).applications()).withRel("apps")))
+                linkTo(methodOn(ExecutionController.class)).withSelfRel(),
+                linkTo(methodOn(ApplicationController.class).applications()).withRel("apps")))
             .orElseThrow(() -> new EntityNotFoundException(id));
     }
 

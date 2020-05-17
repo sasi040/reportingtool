@@ -1,4 +1,4 @@
-package com.test.reporting.reportingtool.ctrl;
+package com.test.reporting.reportingtool.controllers;
 
 import com.test.reporting.reportingtool.dtos.TestCaseDto;
 import com.test.reporting.reportingtool.dtos.TestSuiteDto;

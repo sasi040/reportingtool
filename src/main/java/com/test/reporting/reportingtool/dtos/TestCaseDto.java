@@ -1,6 +1,6 @@
 package com.test.reporting.reportingtool.dtos;
 
-import com.test.reporting.reportingtool.jparepos.Status;
+import com.test.reporting.reportingtool.entities.Status;
 import java.time.LocalDateTime;
 import java.util.List;
 

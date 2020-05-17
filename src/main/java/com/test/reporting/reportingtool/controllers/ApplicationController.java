@@ -1,15 +1,14 @@
-package com.test.reporting.reportingtool.ctrl;
+package com.test.reporting.reportingtool.controllers;
 
 import com.test.reporting.reportingtool.dtos.ApplicationDto;
 import com.test.reporting.reportingtool.dtos.ExecutionDto;
 import com.test.reporting.reportingtool.exceptions.EntityNotFoundException;
-import com.test.reporting.reportingtool.services.AppService;
+import com.test.reporting.reportingtool.services.ApplicationService;
 import com.test.reporting.reportingtool.services.ExecutionService;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,10 +21,10 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping(value = "/app")
-public class AppController {
+public class ApplicationController {
 
     @Autowired
-    private AppService appService;
+    private ApplicationService appService;
 
     @Autowired
     private ExecutionService executionService;
@@ -39,8 +38,8 @@ public class AppController {
     @RequestMapping(method = RequestMethod.GET, path = "{id}")
     public EntityModel<ApplicationDto> findApplicationById(@PathVariable("id") final Long id) {
         return Optional.ofNullable(this.appService.getApplication(id))
-            .map(app -> new EntityModel<>(app, linkTo(methodOn(AppController.class).findApplicationById(id)).withSelfRel(),
-                linkTo(methodOn(AppController.class).applications()).withRel("apps")))
+            .map(app -> new EntityModel<>(app, linkTo(methodOn(ApplicationController.class).findApplicationById(id)).withSelfRel(),
+                linkTo(methodOn(ApplicationController.class).applications()).withRel("apps")))
             .orElseThrow(() -> new EntityNotFoundException(id));
     }
 
@@ -49,8 +48,8 @@ public class AppController {
         Collection<EntityModel<ApplicationDto>> applications = this.appService.findAll()
             .stream()
             .map(app -> new EntityModel<>(app,
-                linkTo(methodOn(AppController.class).findApplicationById(app.getId())).withSelfRel(),
-                linkTo(methodOn(AppController.class).applications()).withRel("applications")
+                linkTo(methodOn(ApplicationController.class).findApplicationById(app.getId())).withSelfRel(),
+                linkTo(methodOn(ApplicationController.class).applications()).withRel("applications")
             ))
             .collect(Collectors.toList());
 

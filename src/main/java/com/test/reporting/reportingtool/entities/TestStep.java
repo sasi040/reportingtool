@@ -1,24 +1,47 @@
-package com.test.reporting.reportingtool.pojos;
+package com.test.reporting.reportingtool.entities;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
-@Document("steps")
+@Entity
+@Table(name = "TEST_STEP")
 public class TestStep {
 
     @Id
-    private String id;
-    private String name;
-    private String description;
-    private Status status;
-    private String filePath;
-    private Integer duration;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-    public String getId() {
+    private String name;
+
+    private String description;
+
+    private Status status;
+
+    private String filePath;
+
+    private int duration;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private TestCase testCase;
+
+    public TestCase getTestCase() {
+        return testCase;
+    }
+
+    public void setTestCase(final TestCase testCase) {
+        this.testCase = testCase;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(final String id) {
+    public void setId(final Long id) {
         this.id = id;
     }
 
@@ -54,11 +77,11 @@ public class TestStep {
         this.filePath = filePath;
     }
 
-    public Integer getDuration() {
+    public int getDuration() {
         return duration;
     }
 
-    public void setDuration(final Integer duration) {
+    public void setDuration(final int duration) {
         this.duration = duration;
     }
 }

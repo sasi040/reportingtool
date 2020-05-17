@@ -1,8 +1,11 @@
-package com.test.reporting.reportingtool.pojos;
+package com.test.reporting.reportingtool.entities;
 
 public enum Status {
 
-    SUCCESS("Success"), FAILED("Failed"),WARNING("Warning");
+    SUCCESS("Success"),
+    FAILED("Failed"),
+    WARNING("Warning"),
+    CANCELLED("Cancelled");
 
     private String status;
 

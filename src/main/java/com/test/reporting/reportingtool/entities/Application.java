@@ -1,4 +1,4 @@
-package com.test.reporting.reportingtool.jparepos;
+package com.test.reporting.reportingtool.entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;

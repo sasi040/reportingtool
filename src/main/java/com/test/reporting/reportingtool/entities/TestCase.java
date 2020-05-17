@@ -1,15 +1,24 @@
-package com.test.reporting.reportingtool.pojos;
+package com.test.reporting.reportingtool.entities;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
-@Document("testCases")
+@Entity
+@Table(name = "TEST_CASE")
 public class TestCase {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
     private String name;
 
@@ -17,23 +26,39 @@ public class TestCase {
 
     private LocalDateTime endTime;
 
-    private Integer testStepsPassed;
+    private int testStepsPassed;
 
-    private Integer testStepsFailed;
+    private int testStepsFailed;
 
-    private Integer testStepsWithWarnings;
+    private int testStepsWithWarnings;
 
-    private Integer testStepsNotRun;
+    private int testStepsNotRun;
 
     private Status status;
 
+    @OneToMany(
+        mappedBy = "testCase",
+        cascade = CascadeType.ALL,
+        orphanRemoval = true
+    )
     private List<TestStep> steps;
 
-    public String getId() {
+    @ManyToOne(fetch = FetchType.LAZY)
+    private TestSuite testSuite;
+
+    public TestSuite getTestSuite() {
+        return testSuite;
+    }
+
+    public void setTestSuite(final TestSuite testSuite) {
+        this.testSuite = testSuite;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(final String id) {
+    public void setId(final Long id) {
         this.id = id;
     }
 
@@ -61,39 +86,39 @@ public class TestCase {
         this.endTime = endTime;
     }
 
-    public Integer getTestStepsPassed() {
+    public int getTestStepsPassed() {
         return testStepsPassed;
     }
 
-    public void setTestStepsPassed(final Integer testStepsPassed) {
+    public void setTestStepsPassed(final int testStepsPassed) {
         this.testStepsPassed = testStepsPassed;
     }
 
-    public Integer getTestStepsFailed() {
+    public int getTestStepsFailed() {
         return testStepsFailed;
     }
 
-    public void setTestStepsFailed(final Integer testStepsFailed) {
+    public void setTestStepsFailed(final int testStepsFailed) {
         this.testStepsFailed = testStepsFailed;
     }
 
-    public Integer getTestStepsWithWarnings() {
+    public int getTestStepsWithWarnings() {
         return testStepsWithWarnings;
     }
 
-    public void setTestStepsWithWarnings(final Integer testStepsWithWarnings) {
+    public void setTestStepsWithWarnings(final int testStepsWithWarnings) {
         this.testStepsWithWarnings = testStepsWithWarnings;
     }
 
-    Integer getTestStepsNotRun() {
+    public int getTestStepsNotRun() {
         return testStepsNotRun;
     }
 
-    void setTestStepsNotRun(final Integer testStepsNotRun) {
+    public void setTestStepsNotRun(final Integer testStepsNotRun) {
         this.testStepsNotRun = testStepsNotRun;
     }
 
-    Integer getTotalTestSteps() {
+    int getTotalTestSteps() {
         return this.testStepsFailed + this.testStepsNotRun + this.testStepsPassed + this.testStepsWithWarnings;
     }
 

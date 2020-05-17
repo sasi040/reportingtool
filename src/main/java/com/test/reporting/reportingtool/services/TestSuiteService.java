@@ -2,9 +2,9 @@ package com.test.reporting.reportingtool.services;
 
 import com.test.reporting.reportingtool.converters.Converter;
 import com.test.reporting.reportingtool.dtos.TestSuiteDto;
-import com.test.reporting.reportingtool.jparepos.TestSuite;
-import com.test.reporting.reportingtool.repositories.ExecutionJpaRepository;
-import com.test.reporting.reportingtool.repositories.TestSuiteJpaRepository;
+import com.test.reporting.reportingtool.entities.TestSuite;
+import com.test.reporting.reportingtool.repositories.ExecutionRepository;
+import com.test.reporting.reportingtool.repositories.TestSuiteRepository;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,15 +12,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class TestSuiteService {
 
-    private TestSuiteJpaRepository repository;
+    private TestSuiteRepository repository;
 
     @Autowired
-    private ExecutionJpaRepository executionRepository;
+    private ExecutionRepository executionRepository;
 
     @Autowired
     private Converter converter;
 
-    public TestSuiteService(TestSuiteJpaRepository repository) {
+    public TestSuiteService(TestSuiteRepository repository) {
         this.repository = repository;
     }
 

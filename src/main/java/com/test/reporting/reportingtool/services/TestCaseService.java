@@ -2,9 +2,9 @@ package com.test.reporting.reportingtool.services;
 
 import com.test.reporting.reportingtool.converters.Converter;
 import com.test.reporting.reportingtool.dtos.TestCaseDto;
-import com.test.reporting.reportingtool.jparepos.TestCase;
-import com.test.reporting.reportingtool.repositories.TestCaseJpaRepository;
-import com.test.reporting.reportingtool.repositories.TestSuiteJpaRepository;
+import com.test.reporting.reportingtool.entities.TestCase;
+import com.test.reporting.reportingtool.repositories.TestCaseRepository;
+import com.test.reporting.reportingtool.repositories.TestSuiteRepository;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,15 +13,15 @@ import org.springframework.stereotype.Service;
 public class TestCaseService {
 
 
-    private TestCaseJpaRepository repository;
+    private TestCaseRepository repository;
 
     @Autowired
-    private TestSuiteJpaRepository testSuiteRepository;
+    private TestSuiteRepository testSuiteRepository;
 
     @Autowired
     private Converter converter;
 
-    public TestCaseService(TestCaseJpaRepository repository) {
+    public TestCaseService(TestCaseRepository repository) {
         this.repository = repository;
     }
 
