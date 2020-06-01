@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -18,27 +19,35 @@ import javax.persistence.Table;
 public class Execution implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
 
     private String environment;
 
+    @Column(name = "BROWSER_TYPE")
     private String browserType;
 
+    @Column(name="OPERATING_SYSTEM")
     private String operatingSystem;
 
+    @Column(name="SYSTEM_IP")
     private String systemIP;
 
+    @Column(name = "SYSTEM_NAME")
     private String systemName;
 
+    @Column(name = "EXECUTED_BY")
     private String executedBy;
 
+    @Column(name = "START_TIME")
     private LocalDateTime startTime;
 
+    @Column(name="END_TIME")
     private LocalDateTime endTime;
 
+    @Column(name = "STATUS")
     private Status status;
 
     public Application getApplication() {

@@ -11,27 +11,32 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "TEST_CASE")
 public class TestCase {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private String description;
 
     private LocalDateTime startTime;
 
     private LocalDateTime endTime;
 
+    @Transient
     private int testStepsPassed;
 
+    @Transient
     private int testStepsFailed;
 
+    @Transient
     private int testStepsWithWarnings;
 
+    @Transient
     private int testStepsNotRun;
 
     private Status status;
@@ -62,12 +67,12 @@ public class TestCase {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getDescription() {
+        return description;
     }
 
-    public void setName(final String name) {
-        this.name = name;
+    public void setDescription(final String description) {
+        this.description = description;
     }
 
     public LocalDateTime getStartTime() {

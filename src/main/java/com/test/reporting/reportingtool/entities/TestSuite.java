@@ -11,27 +11,32 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "TEST_SUITE")
 public class TestSuite {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private java.lang.Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    private String name;
+    private String description;
 
     private LocalDateTime startTime;
 
     private LocalDateTime endTime;
 
+    @Transient
     private int testCasesPassed;
 
+    @Transient
     private int testCasesFailed;
 
+    @Transient
     private int testCasesWithWarnings;
 
+    @Transient
     private int testsNotRun;
 
     private Status status;
@@ -54,7 +59,7 @@ public class TestSuite {
     @ManyToOne(fetch = FetchType.LAZY)
     private Execution execution;
 
-    public java.lang.Long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -62,12 +67,12 @@ public class TestSuite {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getDescription() {
+        return description;
     }
 
-    public void setName(final String name) {
-        this.name = name;
+    public void setDescription(final String description) {
+        this.description = description;
     }
 
     public LocalDateTime getStartTime() {

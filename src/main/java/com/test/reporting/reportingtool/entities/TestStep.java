@@ -1,5 +1,6 @@
 package com.test.reporting.reportingtool.entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -13,18 +14,14 @@ import javax.persistence.Table;
 public class TestStep {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private String name;
 
     private String description;
 
     private Status status;
 
     private String filePath;
-
-    private int duration;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private TestCase testCase;
@@ -43,14 +40,6 @@ public class TestStep {
 
     public void setId(final Long id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(final String name) {
-        this.name = name;
     }
 
     public String getDescription() {
@@ -75,13 +64,5 @@ public class TestStep {
 
     public void setFilePath(final String filePath) {
         this.filePath = filePath;
-    }
-
-    public int getDuration() {
-        return duration;
-    }
-
-    public void setDuration(final int duration) {
-        this.duration = duration;
     }
 }
